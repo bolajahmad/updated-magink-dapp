@@ -1,0 +1,9 @@
+# Ignore build artifacts from the local tests sub-crate.
+/target/
+.vscode
+
+# Ignore backup files creates by cargo fmt.
+**/*.rs.bk
+
+# Mac turds
+.DS_Store
