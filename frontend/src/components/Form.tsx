@@ -33,12 +33,11 @@ export const MaginkForm = ({ awake, isAwake, remainingBlocks, runtimeError, badg
     <Form>
       {account && !isAwake && (
         <>
-        <p>Press Start for ten swanky lessons about ink! and Astar Network</p>
-        <br/>
-        <Button type="button"
-          disabled={isSubmitting || !isValid || !hasFunds } onClick={awake}>
-          Start
-        </Button>
+          <p>Press Start for ten swanky lessons about ink! and Astar Network</p>
+          <br />
+          <Button type="button" disabled={isSubmitting || !isValid || !hasFunds} onClick={awake}>
+            Start
+          </Button>
         </>
       )}
 
@@ -47,11 +46,8 @@ export const MaginkForm = ({ awake, isAwake, remainingBlocks, runtimeError, badg
           <>
             <InkFacts badges={badges} />
             <br />
-            <Button
-              type="submit"
-              disabled={isSubmitting || !isValid || (remainingBlocks != 0 && !isFirtsClaim) || badges >= 9}
-            >
-              Claim badge
+            <Button type="submit" disabled={isSubmitting || !isValid || (remainingBlocks != 0 && !isFirtsClaim)}>
+              {badges < 9 ? 'Claim Badge' : 'Mint Badge'}
             </Button>
           </>
         )}
@@ -62,13 +58,9 @@ export const MaginkForm = ({ awake, isAwake, remainingBlocks, runtimeError, badg
         )}
       </div>
       {remainingBlocks != 0 && isAwake && badges <= 9 && !isFirtsClaim && (
-        <div className="text-xs text-left mb-2 text-gray-200">
-          Claim a new badge after {remainingBlocks} blocks
-        </div>
+        <div className="text-xs text-left mb-2 text-gray-200">Claim a new badge after {remainingBlocks} blocks</div>
       )}
-      {account && isAwake && (
-        <Gallery level={badges} />
-      )}
+      {account && isAwake && <Gallery level={badges} />}
       {runtimeError && magink && (
         <div className="text-xs text-left mb-2 text-red-500">
           {pickDecodedError(
