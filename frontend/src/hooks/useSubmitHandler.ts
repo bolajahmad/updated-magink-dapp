@@ -4,6 +4,7 @@ import { FormikHelpers } from 'formik';
 import { useMaginkContract } from './useMaginkContract';
 import { NFTStorage } from 'nft.storage';
 import { NFT_STORAGE_KEY } from '../const';
+import CryptoJS from 'crypto-js';
 import { useWallet } from 'useink';
 
 async function fileFromPath(filePath: string) {
@@ -22,13 +23,13 @@ async function fileFromPath(filePath: string) {
 
 export const useSubmitHandler = () => {
   const { account } = useWallet();
-  const { claim, mintWizard, getBadges } = useMaginkContract();
+  const { claim, mintWizard, getBadgesFor } = useMaginkContract();
 
   const createNFTMetadata = async () => {
-    const nftstorage = await new NFTStorage({ token: NFT_STORAGE_KEY });
+    const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });
 
     const image = await fileFromPath('../assets/wizard.png');
-    console.log({ account, image });
+    console.log({ image });
 
     const result = await nftstorage.store({
       image,
@@ -40,14 +41,15 @@ export const useSubmitHandler = () => {
 
   return async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
     console.log('send claim Tx');
-    const badgesEarned = await getBadges?.send(undefined, { defaultCaller: true });
+    const badgesEarned = await getBadgesFor?.send([account?.address], { defaultCaller: true });
 
     if (badgesEarned?.ok && badgesEarned.value.decoded >= 9) {
       console.log('##### badges earned count', badgesEarned?.ok && badgesEarned.value.decoded);
       console.log('send mint wizard transaction');
       const result = await createNFTMetadata();
       console.log({ metadata_result: result });
-      const mintArgs = [result.ipnft];
+      const hash = CryptoJS.SHA256(result.ipnft).toString();
+      const mintArgs = [hash];
       mintWizard?.signAndSend(mintArgs, undefined, (_result, _api, error) => {
         if (error) {
           console.error(JSON.stringify(error));

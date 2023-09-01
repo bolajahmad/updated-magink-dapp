@@ -5,6 +5,7 @@ pub mod magink {
     use crate::ensure;
     use ink::env::call::{build_call, ExecutionInput, Selector};
     use ink::env::DefaultEnvironment;
+    use ink::prelude::vec::Vec;
     use ink::storage::Mapping;
 
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
@@ -87,7 +88,7 @@ pub mod magink {
 
         /// Mints a wizard NFT for completed profile.
         #[ink(message)]
-        pub fn mint_wizard(&mut self, metadata: [u8; 64]) -> Result<(), Error> {
+        pub fn mint_wizard(&mut self, metadata: Vec<u8>) -> Result<(), Error> {
             let caller = self.env().caller();
             let badges_for = self.get_badges_for(caller);
             ensure!(badges_for >= 9, Error::LessonsNotCompleted);

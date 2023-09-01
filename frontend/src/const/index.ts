@@ -4,7 +4,7 @@ export const initialValues: Values = { blocksToLive: 0 };
 
 export const WIZARD_IPFS_CID = 'bafybeibwbgwzqigw7touxmixxvkd3wfcf2rcljgbt75na7rwwnw4ojgljy';
 
-export const CONTRACT_ADDRESS = 'YDisMDBH85PYkz3tCzvuhQUqeq1SA1RNcJkqsi6iB3Yd1T1';
+export const CONTRACT_ADDRESS = 'Z5NXJRyLweBLQqmRzAZaDuMjAmn7E4eqTkyVFQmXrQAUdth';
 
 export const NFT_STORAGE_KEY = process.env.REACT_NFT_STORAGE_API_KEY ?? '';
 
