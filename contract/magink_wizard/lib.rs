@@ -53,7 +53,7 @@ pub mod magink_wizard {
         pub fn mint(
             &mut self,
             account: AccountId,
-            id: [u8; 64],
+            id: Vec<u8>,
         ) -> Result<(), PSP34Error> {
             psp34::InternalImpl::_mint_to(self, account, Id::Bytes(id.to_vec()))
         }

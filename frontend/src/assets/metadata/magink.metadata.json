@@ -1,882 +1,883 @@
 {
-    "source": {
-      "hash": "0x39722c8c6f9d76afa347f4436e8cea298e20f60018b5a25d9a38fde6ddf1e0d7",
-      "language": "ink! 4.2.1",
-      "compiler": "rustc 1.69.0",
-      "build_info": {
-        "build_mode": "Debug",
-        "cargo_contract_version": "3.0.1",
-        "rust_toolchain": "stable-aarch64-apple-darwin",
-        "wasm_opt_settings": {
-          "keep_debug_symbols": false,
-          "optimization_passes": "Z"
-        }
+  "source": {
+    "hash": "0x42151192c2947350f1408c309ca9fff40e4a930ef288c29f62755bc20b65323d",
+    "language": "ink! 4.2.1",
+    "compiler": "rustc 1.69.0",
+    "build_info": {
+      "build_mode": "Debug",
+      "cargo_contract_version": "3.0.1",
+      "rust_toolchain": "stable-aarch64-apple-darwin",
+      "wasm_opt_settings": {
+        "keep_debug_symbols": false,
+        "optimization_passes": "Z"
       }
-    },
-    "contract": {
-      "name": "magink",
-      "version": "0.1.0",
-      "authors": [
-        "Mar.io"
-      ]
-    },
-    "spec": {
-      "constructors": [
-        {
-          "args": [
-            {
-              "label": "wizard_account",
-              "type": {
-                "displayName": [
-                  "AccountId"
-                ],
-                "type": 2
-              }
+    }
+  },
+  "contract": {
+    "name": "magink",
+    "version": "0.1.0",
+    "authors": [
+      "Mar.io"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "label": "wizard_account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
             }
-          ],
-          "default": false,
-          "docs": [
-            "Creates a new Magink smart contract."
-          ],
-          "label": "new",
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink_primitives",
-              "ConstructorResult"
-            ],
-            "type": 4
-          },
-          "selector": "0x9bae9d5e"
-        }
-      ],
-      "docs": [],
-      "environment": {
-        "accountId": {
-          "displayName": [
-            "AccountId"
-          ],
-          "type": 2
-        },
-        "balance": {
-          "displayName": [
-            "Balance"
-          ],
-          "type": 16
-        },
-        "blockNumber": {
-          "displayName": [
-            "BlockNumber"
-          ],
-          "type": 1
-        },
-        "chainExtension": {
-          "displayName": [
-            "ChainExtension"
-          ],
-          "type": 19
-        },
-        "hash": {
-          "displayName": [
-            "Hash"
-          ],
-          "type": 17
-        },
-        "maxEventTopics": 4,
-        "timestamp": {
-          "displayName": [
-            "Timestamp"
-          ],
-          "type": 18
-        }
-      },
-      "events": [],
-      "lang_error": {
-        "displayName": [
-          "ink",
-          "LangError"
+          }
         ],
-        "type": 6
-      },
-      "messages": [
-        {
-          "args": [
-            {
-              "label": "era",
-              "type": {
-                "displayName": [
-                  "u8"
-                ],
-                "type": 0
-              }
-            }
-          ],
-          "default": false,
-          "docs": [
-            " (Re)Start the Magink the claiming era for the caller."
-          ],
-          "label": "start",
-          "mutates": true,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 4
-          },
-          "selector": "0x3c1e3986"
-        },
-        {
-          "args": [],
-          "default": false,
-          "docs": [
-            " Claim the badge after the era."
-          ],
-          "label": "claim",
-          "mutates": true,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 7
-          },
-          "selector": "0xb388803f"
-        },
-        {
-          "args": [],
-          "default": false,
-          "docs": [
-            " Returns the remaining blocks in the era."
-          ],
-          "label": "get_remaining",
-          "mutates": false,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 10
-          },
-          "selector": "0x84539e3b"
-        },
-        {
-          "args": [
-            {
-              "label": "metadata",
-              "type": {
-                "displayName": [],
-                "type": 11
-              }
-            }
-          ],
-          "default": false,
-          "docs": [
-            " Mints a wizard NFT for completed profile."
-          ],
-          "label": "mint_wizard",
-          "mutates": true,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 7
-          },
-          "selector": "0x4265458d"
-        },
-        {
-          "args": [
-            {
-              "label": "account",
-              "type": {
-                "displayName": [
-                  "AccountId"
-                ],
-                "type": 2
-              }
-            }
-          ],
-          "default": false,
-          "docs": [
-            " Returns the remaining blocks in the era for the given account."
-          ],
-          "label": "get_remaining_for",
-          "mutates": false,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 10
-          },
-          "selector": "0xc220c975"
-        },
-        {
-          "args": [
-            {
-              "label": "account",
-              "type": {
-                "displayName": [
-                  "AccountId"
-                ],
-                "type": 2
-              }
-            }
-          ],
-          "default": false,
-          "docs": [
-            " Returns the profile of the given account."
-          ],
-          "label": "get_account_profile",
-          "mutates": false,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 12
-          },
-          "selector": "0x49480163"
-        },
-        {
-          "args": [],
-          "default": false,
-          "docs": [
-            " Returns the profile of the caller."
-          ],
-          "label": "get_profile",
-          "mutates": false,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 12
-          },
-          "selector": "0x166e7927"
-        },
-        {
-          "args": [],
-          "default": false,
-          "docs": [
-            " Returns the badge of the caller."
-          ],
-          "label": "get_badges",
-          "mutates": false,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 10
-          },
-          "selector": "0xd3907224"
-        },
-        {
-          "args": [
-            {
-              "label": "account",
-              "type": {
-                "displayName": [
-                  "AccountId"
-                ],
-                "type": 2
-              }
-            }
-          ],
-          "default": false,
-          "docs": [
-            " Returns the badge count of the given account."
-          ],
-          "label": "get_badges_for",
-          "mutates": false,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 10
-          },
-          "selector": "0x89caa824"
-        },
-        {
-          "args": [],
-          "default": false,
-          "docs": [],
-          "label": "get_total_wizard_supply",
-          "mutates": false,
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "ink",
-              "MessageResult"
-            ],
-            "type": 15
-          },
-          "selector": "0x1fe80e6e"
-        }
-      ]
-    },
-    "storage": {
-      "root": {
-        "layout": {
-          "struct": {
-            "fields": [
-              {
-                "layout": {
-                  "root": {
-                    "layout": {
-                      "struct": {
-                        "fields": [
-                          {
-                            "layout": {
-                              "leaf": {
-                                "key": "0xf0c1edb0",
-                                "ty": 0
-                              }
-                            },
-                            "name": "claim_era"
-                          },
-                          {
-                            "layout": {
-                              "leaf": {
-                                "key": "0xf0c1edb0",
-                                "ty": 1
-                              }
-                            },
-                            "name": "start_block"
-                          },
-                          {
-                            "layout": {
-                              "leaf": {
-                                "key": "0xf0c1edb0",
-                                "ty": 0
-                              }
-                            },
-                            "name": "badges_claimed"
-                          }
-                        ],
-                        "name": "Profile"
-                      }
-                    },
-                    "root_key": "0xf0c1edb0"
-                  }
-                },
-                "name": "user"
-              },
-              {
-                "layout": {
-                  "leaf": {
-                    "key": "0x00000000",
-                    "ty": 2
-                  }
-                },
-                "name": "wizard_contract"
-              }
-            ],
-            "name": "Magink"
-          }
-        },
-        "root_key": "0x00000000"
-      }
-    },
-    "types": [
-      {
-        "id": 0,
-        "type": {
-          "def": {
-            "primitive": "u8"
-          }
-        }
-      },
-      {
-        "id": 1,
-        "type": {
-          "def": {
-            "primitive": "u32"
-          }
-        }
-      },
-      {
-        "id": 2,
-        "type": {
-          "def": {
-            "composite": {
-              "fields": [
-                {
-                  "type": 3,
-                  "typeName": "[u8; 32]"
-                }
-              ]
-            }
-          },
-          "path": [
+        "default": false,
+        "docs": [
+          "Creates a new Magink smart contract."
+        ],
+        "label": "new",
+        "payable": false,
+        "returnType": {
+          "displayName": [
             "ink_primitives",
-            "types",
-            "AccountId"
-          ]
-        }
-      },
-      {
-        "id": 3,
-        "type": {
-          "def": {
-            "array": {
-              "len": 32,
-              "type": 0
-            }
-          }
-        }
-      },
-      {
-        "id": 4,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "fields": [
-                    {
-                      "type": 5
-                    }
-                  ],
-                  "index": 0,
-                  "name": "Ok"
-                },
-                {
-                  "fields": [
-                    {
-                      "type": 6
-                    }
-                  ],
-                  "index": 1,
-                  "name": "Err"
-                }
-              ]
-            }
-          },
-          "params": [
-            {
-              "name": "T",
-              "type": 5
-            },
-            {
-              "name": "E",
-              "type": 6
-            }
+            "ConstructorResult"
           ],
-          "path": [
-            "Result"
-          ]
-        }
-      },
-      {
-        "id": 5,
-        "type": {
-          "def": {
-            "tuple": []
-          }
-        }
-      },
-      {
-        "id": 6,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "index": 1,
-                  "name": "CouldNotReadInput"
-                }
-              ]
-            }
-          },
-          "path": [
-            "ink_primitives",
-            "LangError"
-          ]
-        }
-      },
-      {
-        "id": 7,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "fields": [
-                    {
-                      "type": 8
-                    }
-                  ],
-                  "index": 0,
-                  "name": "Ok"
-                },
-                {
-                  "fields": [
-                    {
-                      "type": 6
-                    }
-                  ],
-                  "index": 1,
-                  "name": "Err"
-                }
-              ]
-            }
-          },
-          "params": [
-            {
-              "name": "T",
-              "type": 8
-            },
-            {
-              "name": "E",
-              "type": 6
-            }
-          ],
-          "path": [
-            "Result"
-          ]
-        }
-      },
-      {
-        "id": 8,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "fields": [
-                    {
-                      "type": 5
-                    }
-                  ],
-                  "index": 0,
-                  "name": "Ok"
-                },
-                {
-                  "fields": [
-                    {
-                      "type": 9
-                    }
-                  ],
-                  "index": 1,
-                  "name": "Err"
-                }
-              ]
-            }
-          },
-          "params": [
-            {
-              "name": "T",
-              "type": 5
-            },
-            {
-              "name": "E",
-              "type": 9
-            }
-          ],
-          "path": [
-            "Result"
-          ]
-        }
-      },
-      {
-        "id": 9,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "index": 0,
-                  "name": "TooEarlyToClaim"
-                },
-                {
-                  "index": 1,
-                  "name": "UserNotFound"
-                },
-                {
-                  "index": 2,
-                  "name": "LessonsNotCompleted"
-                },
-                {
-                  "index": 3,
-                  "name": "BadgeMintingFailed"
-                },
-                {
-                  "index": 4,
-                  "name": "AlreadyClaimedCompletionBadge"
-                }
-              ]
-            }
-          },
-          "path": [
-            "magink",
-            "magink",
-            "Error"
-          ]
-        }
-      },
-      {
-        "id": 10,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "fields": [
-                    {
-                      "type": 0
-                    }
-                  ],
-                  "index": 0,
-                  "name": "Ok"
-                },
-                {
-                  "fields": [
-                    {
-                      "type": 6
-                    }
-                  ],
-                  "index": 1,
-                  "name": "Err"
-                }
-              ]
-            }
-          },
-          "params": [
-            {
-              "name": "T",
-              "type": 0
-            },
-            {
-              "name": "E",
-              "type": 6
-            }
-          ],
-          "path": [
-            "Result"
-          ]
-        }
-      },
-      {
-        "id": 11,
-        "type": {
-          "def": {
-            "array": {
-              "len": 64,
-              "type": 0
-            }
-          }
-        }
-      },
-      {
-        "id": 12,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "fields": [
-                    {
-                      "type": 13
-                    }
-                  ],
-                  "index": 0,
-                  "name": "Ok"
-                },
-                {
-                  "fields": [
-                    {
-                      "type": 6
-                    }
-                  ],
-                  "index": 1,
-                  "name": "Err"
-                }
-              ]
-            }
-          },
-          "params": [
-            {
-              "name": "T",
-              "type": 13
-            },
-            {
-              "name": "E",
-              "type": 6
-            }
-          ],
-          "path": [
-            "Result"
-          ]
-        }
-      },
-      {
-        "id": 13,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "index": 0,
-                  "name": "None"
-                },
-                {
-                  "fields": [
-                    {
-                      "type": 14
-                    }
-                  ],
-                  "index": 1,
-                  "name": "Some"
-                }
-              ]
-            }
-          },
-          "params": [
-            {
-              "name": "T",
-              "type": 14
-            }
-          ],
-          "path": [
-            "Option"
-          ]
-        }
-      },
-      {
-        "id": 14,
-        "type": {
-          "def": {
-            "composite": {
-              "fields": [
-                {
-                  "name": "claim_era",
-                  "type": 0,
-                  "typeName": "u8"
-                },
-                {
-                  "name": "start_block",
-                  "type": 1,
-                  "typeName": "u32"
-                },
-                {
-                  "name": "badges_claimed",
-                  "type": 0,
-                  "typeName": "u8"
-                }
-              ]
-            }
-          },
-          "path": [
-            "magink",
-            "magink",
-            "Profile"
-          ]
-        }
-      },
-      {
-        "id": 15,
-        "type": {
-          "def": {
-            "variant": {
-              "variants": [
-                {
-                  "fields": [
-                    {
-                      "type": 16
-                    }
-                  ],
-                  "index": 0,
-                  "name": "Ok"
-                },
-                {
-                  "fields": [
-                    {
-                      "type": 6
-                    }
-                  ],
-                  "index": 1,
-                  "name": "Err"
-                }
-              ]
-            }
-          },
-          "params": [
-            {
-              "name": "T",
-              "type": 16
-            },
-            {
-              "name": "E",
-              "type": 6
-            }
-          ],
-          "path": [
-            "Result"
-          ]
-        }
-      },
-      {
-        "id": 16,
-        "type": {
-          "def": {
-            "primitive": "u128"
-          }
-        }
-      },
-      {
-        "id": 17,
-        "type": {
-          "def": {
-            "composite": {
-              "fields": [
-                {
-                  "type": 3,
-                  "typeName": "[u8; 32]"
-                }
-              ]
-            }
-          },
-          "path": [
-            "ink_primitives",
-            "types",
-            "Hash"
-          ]
-        }
-      },
-      {
-        "id": 18,
-        "type": {
-          "def": {
-            "primitive": "u64"
-          }
-        }
-      },
-      {
-        "id": 19,
-        "type": {
-          "def": {
-            "variant": {}
-          },
-          "path": [
-            "ink_env",
-            "types",
-            "NoChainExtension"
-          ]
-        }
+          "type": 4
+        },
+        "selector": "0x9bae9d5e"
       }
     ],
-    "version": "4"
-  }
+    "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 2
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 16
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 1
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 19
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 17
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 18
+      }
+    },
+    "events": [],
+    "lang_error": {
+      "displayName": [
+        "ink",
+        "LangError"
+      ],
+      "type": 6
+    },
+    "messages": [
+      {
+        "args": [
+          {
+            "label": "era",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " (Re)Start the Magink the claiming era for the caller."
+        ],
+        "label": "start",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 4
+        },
+        "selector": "0x3c1e3986"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [
+          " Claim the badge after the era."
+        ],
+        "label": "claim",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 7
+        },
+        "selector": "0xb388803f"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [
+          " Returns the remaining blocks in the era."
+        ],
+        "label": "get_remaining",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x84539e3b"
+      },
+      {
+        "args": [
+          {
+            "label": "metadata",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 11
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Mints a wizard NFT for completed profile."
+        ],
+        "label": "mint_wizard",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 7
+        },
+        "selector": "0x4265458d"
+      },
+      {
+        "args": [
+          {
+            "label": "account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns the remaining blocks in the era for the given account."
+        ],
+        "label": "get_remaining_for",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xc220c975"
+      },
+      {
+        "args": [
+          {
+            "label": "account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns the profile of the given account."
+        ],
+        "label": "get_account_profile",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 12
+        },
+        "selector": "0x49480163"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [
+          " Returns the profile of the caller."
+        ],
+        "label": "get_profile",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 12
+        },
+        "selector": "0x166e7927"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [
+          " Returns the badge of the caller."
+        ],
+        "label": "get_badges",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xd3907224"
+      },
+      {
+        "args": [
+          {
+            "label": "account",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Returns the badge count of the given account."
+        ],
+        "label": "get_badges_for",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0x89caa824"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_total_wizard_supply",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 15
+        },
+        "selector": "0x1fe80e6e"
+      }
+    ]
+  },
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "root": {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xf0c1edb0",
+                              "ty": 0
+                            }
+                          },
+                          "name": "claim_era"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xf0c1edb0",
+                              "ty": 1
+                            }
+                          },
+                          "name": "start_block"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0xf0c1edb0",
+                              "ty": 0
+                            }
+                          },
+                          "name": "badges_claimed"
+                        }
+                      ],
+                      "name": "Profile"
+                    }
+                  },
+                  "root_key": "0xf0c1edb0"
+                }
+              },
+              "name": "user"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 2
+                }
+              },
+              "name": "wizard_contract"
+            }
+          ],
+          "name": "Magink"
+        }
+      },
+      "root_key": "0x00000000"
+    }
+  },
+  "types": [
+    {
+      "id": 0,
+      "type": {
+        "def": {
+          "primitive": "u8"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 3,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "AccountId"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 5
+          },
+          {
+            "name": "E",
+            "type": 6
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "type": {
+        "def": {
+          "tuple": []
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 1,
+                "name": "CouldNotReadInput"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "LangError"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 8
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 8
+          },
+          {
+            "name": "E",
+            "type": 6
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 5
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 9
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 5
+          },
+          {
+            "name": "E",
+            "type": 9
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "TooEarlyToClaim"
+              },
+              {
+                "index": 1,
+                "name": "UserNotFound"
+              },
+              {
+                "index": 2,
+                "name": "LessonsNotCompleted"
+              },
+              {
+                "index": 3,
+                "name": "BadgeMintingFailed"
+              },
+              {
+                "index": 4,
+                "name": "AlreadyClaimedCompletionBadge"
+              }
+            ]
+          }
+        },
+        "path": [
+          "magink",
+          "magink",
+          "Error"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 0
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 0
+          },
+          {
+            "name": "E",
+            "type": 6
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 13
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 13
+          },
+          {
+            "name": "E",
+            "type": 6
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "index": 0,
+                "name": "None"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 14
+                  }
+                ],
+                "index": 1,
+                "name": "Some"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 14
+          }
+        ],
+        "path": [
+          "Option"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "claim_era",
+                "type": 0,
+                "typeName": "u8"
+              },
+              {
+                "name": "start_block",
+                "type": 1,
+                "typeName": "u32"
+              },
+              {
+                "name": "badges_claimed",
+                "type": 0,
+                "typeName": "u8"
+              }
+            ]
+          }
+        },
+        "path": [
+          "magink",
+          "magink",
+          "Profile"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "type": {
+        "def": {
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 16
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 6
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 16
+          },
+          {
+            "name": "E",
+            "type": 6
+          }
+        ],
+        "path": [
+          "Result"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 3,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
+        ]
+      }
+    }
+  ],
+  "version": "4"
+}
