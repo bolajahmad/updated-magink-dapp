@@ -258,6 +258,7 @@ pub mod magink {
         use ink::primitives::AccountId;
         use ink_e2e::build_message;
         use ink_e2e::subxt::client;
+        use ink_e2e::subxt::tx::Signer;
         use magink_wizard::magink_wizard::MaginkWizardContractRef;
         use openbrush::contracts::ownable::ownable_external::Ownable;
         use openbrush::contracts::psp34::psp34_external::PSP34;
@@ -365,7 +366,7 @@ pub mod magink {
                 None => panic!("Profile not found"),
             }
 
-            /// Users should be able to mint an NFT now for completing the course
+            // Users should be able to mint an NFT now for completing the course
             let sample_metadata =
                 "bafybeibwbgwzqigw7touxmixxvkd3wfcf2rcljgbt75na7rwwnw4ojgljy";
             let mint_wizard_message = build_message::<MaginkRef>(magink_address.clone())
@@ -375,7 +376,7 @@ pub mod magink {
                 .await
                 .expect("Minting a wizard NFT failed");
 
-            /// If minting was successful, total supply should be 1 and,
+            // If minting was successful, total supply should be 1 and,
             let magink_nft_total_supply =
                 build_message::<MaginkWizardContractRef>(magink_wizard_address.clone())
                     .call(|p| p.total_supply());
@@ -389,6 +390,19 @@ pub mod magink {
             );
             assert_eq!(total_supply_result, 1);
 
+            // let bob_nft_balance_message =
+            //     build_message::<MaginkWizardContractRef>(magink_wizard_address.clone())
+            //         .call(|p| {
+            //             p.balance_of(
+            //                 &ink_e2e::bob().address().public_key().to_account_id(),
+            //             )
+            //         });
+            // let bob_balance = client
+            //     .call_dry_run(&ink_e2e::bob(), &bob_nft_balance_message, 0, None)
+            //     .await
+            //     .return_value();
+            // println!("Bob NFT balance, {}", bob_balance);
+            assert_eq!(bob_balance, 1);
             Ok(())
         }
 

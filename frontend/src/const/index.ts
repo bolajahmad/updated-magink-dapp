@@ -6,7 +6,9 @@ export const WIZARD_IPFS_CID = 'bafybeibwbgwzqigw7touxmixxvkd3wfcf2rcljgbt75na7r
 
 export const CONTRACT_ADDRESS = 'Z5NXJRyLweBLQqmRzAZaDuMjAmn7E4eqTkyVFQmXrQAUdth';
 
-export const NFT_STORAGE_KEY = process.env.REACT_NFT_STORAGE_API_KEY ?? '';
+export const NFT_STORAGE_KEY =
+  process.env.REACT_NFT_STORAGE_API_KEY ??
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGY2MkJjMTNhMEUxRjc1NTJhRjFERDhBMjljZmQ0ZDExQTIzRThjNkQiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY5Mjc2OTIwMDgzMSwibmFtZSI6Ik1hZ2luayJ9.l_tzXeME7fQL13H8VxWTH53rIIeY8KbFjTf3LcTZW94';
 
 export const astarFacts: string[] = [
   `Welcome to magink!, where the enchanting fusion of magic and <a href="https://use.ink/" target="_blank">ink!</a> awaits. Embark on an exciting journey into the world of smart contracts on the Astar Network. Earn badges for completing each lesson, showcasing your progress. And as the ultimate reward, claim your exclusive Wizard NFT upon conquering all ten lessons. Let the magic unfold in magink! as we explore the realms of possibility together.`,
