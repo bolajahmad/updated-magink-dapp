@@ -62,7 +62,7 @@ export const FormContainer = () => {
       }
     }
   };
-
+  console.log({ remainingBlocks });
   const startMagink = async () => {
     console.log('startMagink');
     const startArgs = [initialValues.blocksToLive];
