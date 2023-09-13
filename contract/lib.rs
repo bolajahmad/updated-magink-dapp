@@ -8,6 +8,30 @@ pub mod magink {
     use ink::prelude::vec::Vec;
     use ink::storage::Mapping;
 
+    #[ink(event)]
+    pub struct EraStarted {
+        #[ink(topic)]
+        account: AccountId,
+        #[ink(topic)]
+        era: u8,
+        start_block: u32,
+    }
+
+    #[ink(event)]
+    pub struct BadgeClaimed {
+        #[ink(topic)]
+        account: AccountId,
+        claim_block: u32,
+    }
+
+    #[ink(event)]
+    pub struct NFTClaimed {
+        #[ink(topic)]
+        account: AccountId,
+        cid: Vec<u8>,
+        mint_block: u32,
+    }
+
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum Error {
@@ -58,18 +82,29 @@ pub mod magink {
                 badges_claimed: 0,
             };
             self.user.insert(self.env().caller(), &profile);
+            self.env().emit_event(EraStarted {
+                account: self.env().caller(),
+                era,
+                start_block: self.env().block_number(),
+            })
         }
 
         /// Claim the badge after the era.
         #[ink(message)]
         pub fn claim(&mut self) -> Result<(), Error> {
             ensure!(self.get_remaining() == 0, Error::TooEarlyToClaim);
+            let caller = self.env().caller();
+            let block_number = self.env().block_number();
 
             // update profile
             let mut profile = self.get_profile().ok_or(Error::UserNotFound).unwrap();
             profile.badges_claimed += 1;
-            profile.start_block = self.env().block_number();
-            self.user.insert(self.env().caller(), &profile);
+            profile.start_block = block_number;
+            self.user.insert(caller, &profile);
+            self.env().emit_event(BadgeClaimed {
+                account: caller,
+                claim_block: block_number,
+            });
             Ok(())
         }
 
@@ -104,13 +139,20 @@ pub mod magink {
                 .exec_input(
                     ExecutionInput::new(Selector::new(ink::selector_bytes!("mint")))
                         .push_arg(&caller)
-                        .push_arg(metadata),
+                        .push_arg(&metadata),
                 )
                 .returns::<()>()
                 .try_invoke();
 
             match mint_result {
-                Ok(Ok(_)) => Ok(()),
+                Ok(Ok(_)) => {
+                    self.env().emit_event(NFTClaimed {
+                        account: caller,
+                        cid: metadata,
+                        mint_block: self.env().block_number(),
+                    });
+                    Ok(())
+                }
                 _ => Err(Error::BadgeMintingFailed),
             }
         }
