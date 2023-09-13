@@ -8,6 +8,30 @@ pub mod magink {
     use ink::prelude::vec::Vec;
     use ink::storage::Mapping;
 
+    #[ink(event)]
+    pub struct EraStarted {
+        #[ink(topic)]
+        account: AccountId,
+        #[ink(topic)]
+        era: u8,
+        start_block: u32,
+    }
+
+    #[ink(event)]
+    pub struct BadgeClaimed {
+        #[ink(topic)]
+        account: AccountId,
+        claim_block: u32,
+    }
+
+    #[ink(event)]
+    pub struct NFTClaimed {
+        #[ink(topic)]
+        account: AccountId,
+        cid: Vec<u8>,
+        mint_block: u32,
+    }
+
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum Error {
@@ -58,18 +82,29 @@ pub mod magink {
                 badges_claimed: 0,
             };
             self.user.insert(self.env().caller(), &profile);
+            self.env().emit_event(EraStarted {
+                account: self.env().caller(),
+                era,
+                start_block: self.env().block_number(),
+            })
         }
 
         /// Claim the badge after the era.
         #[ink(message)]
         pub fn claim(&mut self) -> Result<(), Error> {
             ensure!(self.get_remaining() == 0, Error::TooEarlyToClaim);
+            let caller = self.env().caller();
+            let block_number = self.env().block_number();
 
             // update profile
             let mut profile = self.get_profile().ok_or(Error::UserNotFound).unwrap();
             profile.badges_claimed += 1;
-            profile.start_block = self.env().block_number();
-            self.user.insert(self.env().caller(), &profile);
+            profile.start_block = block_number;
+            self.user.insert(caller, &profile);
+            self.env().emit_event(BadgeClaimed {
+                account: caller,
+                claim_block: block_number,
+            });
             Ok(())
         }
 
@@ -104,13 +139,20 @@ pub mod magink {
                 .exec_input(
                     ExecutionInput::new(Selector::new(ink::selector_bytes!("mint")))
                         .push_arg(&caller)
-                        .push_arg(metadata),
+                        .push_arg(&metadata),
                 )
                 .returns::<()>()
                 .try_invoke();
 
             match mint_result {
-                Ok(Ok(_)) => Ok(()),
+                Ok(Ok(_)) => {
+                    self.env().emit_event(NFTClaimed {
+                        account: caller,
+                        cid: metadata,
+                        mint_block: self.env().block_number(),
+                    });
+                    Ok(())
+                }
                 _ => Err(Error::BadgeMintingFailed),
             }
         }
@@ -258,24 +300,31 @@ pub mod magink {
         use ink::primitives::AccountId;
         use ink_e2e::build_message;
         use ink_e2e::subxt::client;
-        use magink_wizard::magink_wizard::MaginkWizardRef;
+        use ink_e2e::subxt::tx::Signer;
+        use magink_wizard::magink_wizard::MaginkWizardContractRef;
         use openbrush::contracts::ownable::ownable_external::Ownable;
         use openbrush::contracts::psp34::psp34_external::PSP34;
 
         type E2EResult<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
-        const CLAIMING_ERA: u8 = 3;
+        const CLAIMING_ERA: u8 = 0;
 
         #[ink_e2e::test(additional_contracts = "magink_wizard/Cargo.toml")]
         async fn e2e_claiming_badges_works(
             mut client: ink_e2e::Client<C, E>,
         ) -> E2EResult<()> {
             // instantiate magink_wizard contract
-            let token_constructor = MaginkWizardRef::new();
+            let token_constructor = MaginkWizardContractRef::new();
             let magink_wizard_address = client
-                .instantiate("ShidenNFT", &ink_e2e::alice(), token_constructor, 0, None)
+                .instantiate(
+                    "magink_wizard",
+                    &ink_e2e::alice(),
+                    token_constructor,
+                    0,
+                    None,
+                )
                 .await
-                .expect("Failed to instantiate ShidenNFT contract")
+                .expect("Failed to instantiate Wizard NFT contract")
                 .account_id;
 
             // Instantiate magink contract
@@ -288,16 +337,16 @@ pub mod magink {
 
             // update magink_wizard owner to magink co ntract
             let change_owner =
-                build_message::<MaginkWizardRef>(magink_wizard_address.clone())
+                build_message::<MaginkWizardContractRef>(magink_wizard_address.clone())
                     .call(|p| p.transfer_ownership(magink_address));
             client
                 .call(&ink_e2e::alice(), change_owner, 0, None)
                 .await
-                .expect("Transfer of ShidenNFT ownership failed");
+                .expect("Transfer of Wizard NFT ownership failed");
 
-            // Verify that magink address now owns ShidenNFT
+            // Verify that magink address now owns Wizard NFT
             let magink_wizard_owner =
-                build_message::<MaginkWizardRef>(magink_wizard_address.clone())
+                build_message::<MaginkWizardContractRef>(magink_wizard_address.clone())
                     .call(|p| p.owner());
             let owner_result = client
                 .call_dry_run(&ink_e2e::alice(), &magink_wizard_owner, 0, None)
@@ -319,7 +368,6 @@ pub mod magink {
                 .call_dry_run(&ink_e2e::bob(), &bob_profile_message, 0, None)
                 .await
                 .return_value();
-            println!("bob_profile: {:?}", bob_profile);
             match bob_profile {
                 Some(profile) => {
                     assert_eq!(
@@ -333,7 +381,75 @@ pub mod magink {
                 }
                 None => panic!("Profile not found"),
             }
+
+            // build the claim badge function call
+            for x in 0..9 {
+                let claim_message = build_message::<MaginkRef>(magink_address.clone())
+                    .call(|p| p.claim());
+                client
+                    .call(&ink_e2e::bob(), claim_message, 0, None)
+                    .await
+                    .expect("Claiming a badge failed");
+                advance_block();
+            }
+
+            let bob_profile = client
+                .call_dry_run(&ink_e2e::bob(), &bob_profile_message, 0, None)
+                .await
+                .return_value();
+            println!("bob_profile: {:?}", bob_profile);
+            match bob_profile {
+                Some(profile) => {
+                    assert_eq!(
+                        profile.badges_claimed, 9,
+                        "Profile has not been instantiated"
+                    );
+                }
+                None => panic!("Profile not found"),
+            }
+
+            // Users should be able to mint an NFT now for completing the course
+            let sample_metadata =
+                "bafybeibwbgwzqigw7touxmixxvkd3wfcf2rcljgbt75na7rwwnw4ojgljy";
+            let mint_wizard_message = build_message::<MaginkRef>(magink_address.clone())
+                .call(|p| p.mint_wizard(sample_metadata.as_bytes().to_vec()));
+            client
+                .call(&ink_e2e::bob(), mint_wizard_message, 0, None)
+                .await
+                .expect("Minting a wizard NFT failed");
+
+            // If minting was successful, total supply should be 1 and,
+            let magink_nft_total_supply =
+                build_message::<MaginkWizardContractRef>(magink_wizard_address.clone())
+                    .call(|p| p.total_supply());
+            let total_supply_result = client
+                .call_dry_run(&ink_e2e::bob(), &magink_nft_total_supply, 0, None)
+                .await
+                .return_value();
+            println!(
+                "Total supply of wizard NFT after 1st mint: {}",
+                total_supply_result
+            );
+            assert_eq!(total_supply_result, 1);
+
+            // let bob_nft_balance_message =
+            //     build_message::<MaginkWizardContractRef>(magink_wizard_address.clone())
+            //         .call(|p| {
+            //             p.balance_of(
+            //                 &ink_e2e::bob().address().public_key().to_account_id(),
+            //             )
+            //         });
+            // let bob_balance = client
+            //     .call_dry_run(&ink_e2e::bob(), &bob_nft_balance_message, 0, None)
+            //     .await
+            //     .return_value();
+            // println!("Bob NFT balance, {}", bob_balance);
+            assert_eq!(bob_balance, 1);
             Ok(())
+        }
+
+        fn advance_block() {
+            ink::env::test::advance_block::<ink::env::DefaultEnvironment>();
         }
     }
 }

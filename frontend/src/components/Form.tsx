@@ -7,6 +7,7 @@ import { useBalance, useWallet } from 'useink';
 import { Button } from './Button';
 import { Gallery } from './Gallery';
 import InkFacts from './InkFacts';
+import { useNotifications } from 'useink/notifications';
 
 interface Props {
   awake: () => void;
@@ -22,10 +23,12 @@ export const MaginkForm = ({ awake, isAwake, remainingBlocks, runtimeError, badg
   const { account } = useWallet();
   const { setShowConnectWallet } = useUI();
   const balance = useBalance(account);
+  const { notifications } = useNotifications();
   const hasFunds = !balance?.freeBalance.isEmpty && !balance?.freeBalance.isZero();
 
   const isFirtsClaim = badges == 0;
 
+  const hasPendingClaim = !!notifications.find(({ type }) => type === 'Broadcast');
   if (runtimeError != undefined) {
     console.log('----------------Form getRemaining runtimeError', runtimeError);
   }
@@ -46,7 +49,10 @@ export const MaginkForm = ({ awake, isAwake, remainingBlocks, runtimeError, badg
           <>
             <InkFacts badges={badges} />
             <br />
-            <Button type="submit" disabled={isSubmitting || !isValid || (remainingBlocks != 0 && !isFirtsClaim)}>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !isValid || (remainingBlocks != 0 && !isFirtsClaim) || hasPendingClaim}
+            >
               {badges < 9 ? 'Claim Badge' : 'Mint Badge'}
             </Button>
           </>

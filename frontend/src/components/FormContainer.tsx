@@ -62,7 +62,7 @@ export const FormContainer = () => {
       }
     }
   };
-
+  console.log({ remainingBlocks });
   const startMagink = async () => {
     console.log('startMagink');
     const startArgs = [initialValues.blocksToLive];
@@ -98,10 +98,10 @@ export const FormContainer = () => {
       >
         {({ status: { finalized, events, errorMessage } = {}, isSubmitting }) => {
           return isSubmitting && claim && !hasAny(claim, 'PendingSignature', 'None') ? (
-            <Loader message="Claiming your badge..." />
+            <Loader message={badges >= 9 ? 'Minting your NFT...' : 'Claiming your badge...'} />
           ) : (
             <>
-              {isStarting && (<Loader message="Initializing app for new user..." />)}
+              {isStarting && <Loader message="Initializing app for new user..." />}
               {!isStarting && (
                 <>
                   <Header />
@@ -123,7 +123,8 @@ export const FormContainer = () => {
                       )}
                     </div>
                   </div>
-                </>)}
+                </>
+              )}
             </>
           );
         }}

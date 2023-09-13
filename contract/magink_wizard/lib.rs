@@ -9,6 +9,7 @@
 )]
 #[openbrush::contract]
 pub mod magink_wizard {
+    use openbrush::modifiers;
     use openbrush::traits::{Storage, String};
 
     #[ink(storage)]
@@ -50,6 +51,7 @@ pub mod magink_wizard {
         }
 
         #[ink(message)]
+        #[modifiers(only_owner)]
         pub fn mint(
             &mut self,
             account: AccountId,
